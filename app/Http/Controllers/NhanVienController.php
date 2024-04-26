@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NhanVien;
 use Illuminate\Http\Request;
 
 class NhanVienController extends Controller
@@ -12,6 +13,8 @@ class NhanVienController extends Controller
     public function index()
     {
         //
+        $nhanvien = NhanVien::all();
+        return view('nhanvien.list', compact('nhanvien'));
     }
 
     /**
@@ -20,6 +23,7 @@ class NhanVienController extends Controller
     public function create()
     {
         //
+        return view('nhanvien.add');
     }
 
     /**
@@ -28,6 +32,14 @@ class NhanVienController extends Controller
     public function store(Request $request)
     {
         //
+        $nhanvien = new NhanVien();
+        $nhanvien->name = $request->name;
+        $nhanvien->email = $request->email;
+        $nhanvien->tel = $request->tel;
+
+        $nhanvien->save();
+
+        return redirect('nhanvien');
     }
 
     /**
@@ -44,6 +56,8 @@ class NhanVienController extends Controller
     public function edit(string $id)
     {
         //
+        $nhanvien = NhanVien::find($id);
+        return view('nhanvien.edit', compact('nhanvien'));
     }
 
     /**
@@ -52,6 +66,14 @@ class NhanVienController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $nhanvien = NhanVien::find($id);
+        $nhanvien->name = $request->name;
+        $nhanvien->email = $request->email;
+        $nhanvien->tel = $request->tel;
+
+        $nhanvien->save();
+
+        return redirect('nhanvien');
     }
 
     /**
@@ -60,5 +82,9 @@ class NhanVienController extends Controller
     public function destroy(string $id)
     {
         //
+        $nhanvien = NhanVien::find($id);
+        $nhanvien->delete();
+
+        return redirect('nhanvien');
     }
 }
