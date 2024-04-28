@@ -4,16 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\NhanVien;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class NhanVienController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $nhanvien = NhanVien::all();
+        // $nhanvien = NhanVien::filter()->get();
+        $query = NhanVien::query();
+
+        if(isset($request->search) && ($request->search != null)) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $nhanvien = $query->paginate(5);
+
         return view('nhanvien.list', compact('nhanvien'));
     }
 
@@ -32,6 +41,19 @@ class NhanVienController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:nhanvien,email',
+            'tel' => [
+                'required',
+                'string',
+                'max:14',
+                'regex:/^\d{1,4}-\d{1,4}-\d{1,4}$/'
+            ]
+        ], [
+            'tel.regex' => 'The tel format is invalid. It should be in the format: xxxx-xxxx-xxxx.'
+        ]);
+
         $nhanvien = new NhanVien();
         $nhanvien->name = $request->name;
         $nhanvien->email = $request->email;
@@ -66,6 +88,19 @@ class NhanVienController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:nhanvien,email',
+            'tel' => [
+                'required',
+                'string',
+                'max:14',
+                'regex:/^\d{1,4}-\d{1,4}-\d{1,4}$/'
+            ]
+        ], [
+            'tel.regex' => 'The tel format is invalid. It should be in the format: xxxx-xxxx-xxxx.'
+        ]);
+
         $nhanvien = NhanVien::find($id);
         $nhanvien->name = $request->name;
         $nhanvien->email = $request->email;

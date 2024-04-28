@@ -14,6 +14,6 @@ class NhanVienSeeder extends Seeder
     public function run(): void
     {
         //
-        NhanVien::factory()->count(5)->create();
+        NhanVien::factory()->count(50)->create();
     }
 }

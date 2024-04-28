@@ -3,6 +3,28 @@
     <div class="card" style="margin-top: 120px">
         <div class="card-body">
             <div class="card-title text-center"><h1>Add</h1></div>
+                @if ($errors->has('name'))
+                    <div class="alert alert-danger" role="alert">
+                        @error('name')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                @endif
+                @if ($errors->has('email'))
+                    <div class="alert alert-danger" role="alert">
+                        @error('email')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                @endif
+                @if ($errors->has('tel'))
+                    <div class="alert alert-danger" role="alert">
+                        @error('tel')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                @endif
+
             <form action="{{ route('nhanvien.store') }}" method="POST">
                 @csrf
 
@@ -18,7 +40,10 @@
                     <label for="" class="form-label">Tel</label>
                     <input type="text" class="form-control" id="" name="tel" value="{{ old('tel') }}">
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <div style="display: flex;">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 10px">Register</button>
+                    <a href="{{ route('nhanvien.index') }}"><button type="button" class="btn btn-warning">Back</button></a>
+                </div>
             </form>
         </div>
     </div>
