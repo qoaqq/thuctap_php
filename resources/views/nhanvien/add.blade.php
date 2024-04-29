@@ -3,34 +3,34 @@
     <div class="card" style="margin-top: 120px">
         <div class="card-body">
             <div class="card-title text-center"><h1>Add</h1></div>
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger" role="alert">
-                        @error('name')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                @endif
-                @if ($errors->has('email'))
-                    <div class="alert alert-danger" role="alert">
-                        @error('email')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                @endif
-                @if ($errors->has('tel'))
-                    <div class="alert alert-danger" role="alert">
-                        @error('tel')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                @endif
+            @if ($errors->has('name'))
+                <div class="alert alert-danger" role="alert">
+                    @error('name')
+                        {{ strip_tags($message) }}
+                    @enderror
+                </div>
+            @endif
+            @if ($errors->has('email'))
+                <div class="alert alert-danger" role="alert">
+                    @error('email')
+                        {{ $message }}
+                    @enderror
+                </div>
+            @endif
+            @if ($errors->has('tel'))
+                <div class="alert alert-danger" role="alert">
+                    @error('tel')
+                        {{ $message }}
+                    @enderror
+                </div>
+            @endif
 
             <form action="{{ route('nhanvien.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
                     <label for="" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="" name="name" value="{{ old('name') }}">
+                    <input type="text" class="form-control" id="" name="name" value="{{ old('name') ? strip_tags(old('name')) : '' }}">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Email</label>

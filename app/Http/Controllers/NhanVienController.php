@@ -55,7 +55,7 @@ class NhanVienController extends Controller
         ]);
 
         $nhanvien = new NhanVien();
-        $nhanvien->name = $request->name;
+        $nhanvien->name = strip_tags($request->name);
         $nhanvien->email = $request->email;
         $nhanvien->tel = $request->tel;
 

@@ -60,7 +60,11 @@
 
                     @for ($i = $start; $i <= $end; $i++)
                         <li class="page-item {{ ($paginator->currentPage() == $i) ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                            @if ($paginator->currentPage() == $i)
+                                <span class="page-link">{{ $i }}</span>
+                            @else
+                                <a class="page-link" href="{{ ($paginator->currentPage() != $i) ? $paginator->url($i) : '#' }}">{{ $i }}</a>
+                            @endif
                         </li>
                     @endfor
 
@@ -74,3 +78,11 @@
         </div>
     </nav>
 @endif
+
+<script>
+    function preventDefault(event) {
+        event.preventDefault();
+        return false;
+    }
+</script>
+
